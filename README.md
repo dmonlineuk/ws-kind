@@ -58,9 +58,13 @@ subjects:
 ```bash
 kubectl apply -f service-account.yaml
 
+### Instructions show following, but is empty when I try it
 # to fetch the token back - use the name/token in the UI
 kubectl describe serviceaccount admin-user -n kubernetes-dashboard
 kubectl describe secret admin-user-token-cn2fd -n kubernetes-dashboard
+
+### My alternative is to create the token
+kubectl -n kubernetes-dashboard create token admin-user # capture output as this is your new token
 
 # Start the proxy and enable access to the web ui:
 kubectl -n kubernetes-dashboard port-forward svc/dashboard-kong-proxy 8443:443 # https://localhost:8443
