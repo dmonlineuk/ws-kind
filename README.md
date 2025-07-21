@@ -64,7 +64,7 @@ kubectl describe serviceaccount admin-user -n kubernetes-dashboard
 kubectl describe secret admin-user-token-cn2fd -n kubernetes-dashboard
 
 ### My alternative is to create the token
-kubectl -n kubernetes-dashboard create token admin-user # capture output as this is your new token
+kubectl -n kubernetes-dashboard create token admin-user # capture output
 
 # Start the proxy and enable access to the web ui:
 kubectl -n kubernetes-dashboard port-forward svc/dashboard-kong-proxy 8443:443 # https://localhost:8443
