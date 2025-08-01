@@ -3,7 +3,7 @@ apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
   - role: control-plane
     extraPortMappings:
-      - containerPort: 30080
-        hostPort: 8080
+      - containerPort: 80 # Listening port. This could be the service's nodePort or the Ingress Controller port
+        hostPort: 8080    # Exposed port: this is what will be in our url (or 80 if it allowedm then no port specified in the url)
         protocol: TCP
 
