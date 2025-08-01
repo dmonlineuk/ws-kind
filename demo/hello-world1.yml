@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-config-1
-  namespace: default
+  namespace: demo
 data:
   index.html: |
     <html>
@@ -52,4 +52,4 @@ spec:
     port: 80
     targetPort: 80
     nodePort: 30081
- 
+
