@@ -1,0 +1,40 @@
+#!/bin/bash
+case "$1" in
+  "--cluster-end")
+    kind delete cluster
+    ;;
+  "--cluster-start")
+    kind create cluster --config kind-config.yaml
+    kubectl apply -f hello-world.yaml
+    ;;
+  "--controller-add")
+    helm repo update
+    helm install ingress-nginx ingress-nginx/ingress-nginx \
+      --namespace ingress-nginx --create-namespace \
+      --set controller.service.type=NodePort \
+      --set controller.service.nodePorts.http=30080 \
+      --set controller.service.nodePorts.https=30443 \
+      --set controller.ingressClassResource.name=nginx \
+      --set controller.ingressClassResource.controllerValue="k8s.io/ingress-nginx" \
+      --set controller.nodeSelector="" \
+      --set controller.tolerations="" \
+      --set controller.replicaCount=1 \
+      --set controller.config.worker-processes="1" \
+      --set controller.resources.requests.cpu="100m" \
+      --set controller.resources.requests.memory="128Mi" \
+      --set controller.resources.limits.cpu="250m" \
+      --set controller.resources.limits.memory="256Mi"
+
+    kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx
+    ;;
+  "--ingress-apply")
+    kubectl apply -f ingress-resource.yaml
+    ;;
+  "--status")
+    kubectl get all -A
+    ;;
+  *)
+    echo "Usage: $0 [--cluster-start | --cluster-end | --controller-add | --ingress-apply | --status ]"
+    ;;
+esac
+
