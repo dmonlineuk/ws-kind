@@ -6,3 +6,4 @@ kubectl [command] [TYPE] [NAME] [flags]
 
 kubectl cluster-info --context <cluster-name>
 kubectl config set-context --current --namespace=<namespace>
+kubectl label node demo-control-plane ingress-ready=true
